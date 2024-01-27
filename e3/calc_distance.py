@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 from numpy import radians, sin, cos, sqrt, arctan2, pi, diag
 from pykalman import KalmanFilter
+from calc_distance_hint import output_gpx
 
 #haversine and deg2rad functions adapted to python from https://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula/21623206 
 def haversine(lat1, lon1, lat2, lon2):
@@ -43,8 +44,8 @@ print('Unfiltered distance: %0.2f' % distance(df))
 
 #kalman
 initial_state = df.iloc[0]
-observation_covariance = diag([0.25, 0.25]) ** 2
-transition_covariance = diag([0.5, 0.5]) ** 2
+observation_covariance = diag([0.4, 0.4]) ** 2
+transition_covariance = diag([0.1, 0.1]) ** 2
 transition = [[1,0],[0,1]]
 kf = KalmanFilter(
     initial_state_mean = initial_state,
@@ -58,3 +59,4 @@ data_kalman = {'lat': smoothed_points[:,0], 'lon': smoothed_points[:,1]}
 final = pd.DataFrame(data_kalman)
 print('Filtered distance: %0.2f' % (distance(final)))
 
+output_gpx(final, 'out.gpx')
