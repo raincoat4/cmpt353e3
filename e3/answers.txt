@@ -1,0 +1,8 @@
+1. I think I got a better result with Kalman smoothing. Although LOESS was easier to use, it was
+a lot harder to get it to detect the spikes in CPU temperature, whereas Kalman was a bit more tricky
+to use, but more accurately represented the spikes.
+
+2. Taking these parameters into account and adjusting the Kalman matrices and covariances accordingly
+could have resulted in a slightly better prediction. While "time stamp" might be tricky to find value with,
+data about the "course" as well as the "speed" could have been useful since it can give hints as to
+what direction and what speed you are travelling.
